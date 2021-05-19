@@ -6,13 +6,19 @@ const nodemailer = require('nodemailer');
 const { headersSettingsMidleware } = require('./midlewares');
 
 const app = express();
-app.use(bodyParser.urlencoded(), bodyParser.json(), headersSettingsMidleware);
+// app.use(bodyParser.urlencoded(), bodyParser.json(), headersSettingsMidleware);
+app.use(
+  express.urlencoded({ extended: true }),
+  express.json(),
+  headersSettingsMidleware
+);
+
 const contactAddress = 'test@api.wantbox.by';
 const transport = {
-  sendmail: true,
+  // sendmail: true,
   newline: 'unix',
   path: '/usr/sbin/sendmail',
-  host: 'smtps://api.wantbox.by',
+  host: 'api.wantbox.by',
   port: 465,
   secure: true,
   auth: {
@@ -35,7 +41,6 @@ app.post('/order', cors(), (req, res) => {
       html:
         `<div><h1>Привет, ${name}! Это твой номер - ${phoneNumber}?</h1><span style="color: red">${message}</span></div>` ||
         '[No message]',
-      // html: `<div>${message}</div>`,
     },
     function (err, info) {
       if (err) {
