@@ -1,4 +1,3 @@
-const bodyParser = require('body-parser');
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
@@ -6,7 +5,6 @@ const nodemailer = require('nodemailer');
 const { headersSettingsMidleware } = require('./midlewares');
 
 const app = express();
-// app.use(bodyParser.urlencoded(), bodyParser.json(), headersSettingsMidleware);
 app.use(
   express.urlencoded({ extended: true }),
   express.json(),
