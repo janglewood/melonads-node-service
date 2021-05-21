@@ -20,8 +20,8 @@ const transport = {
   port: 465,
   secure: true,
   auth: {
-    user: 'test@api.wantbox.by',
-    pass: 'p9u8t7I6n5!',
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASSWORD,
   },
   tls: {
     rejectUnauthorized: false, // if on local
@@ -37,7 +37,7 @@ app.post('/order', cors(), (req, res) => {
       to: [contactAddress],
       subject: subject || '[No subject]',
       html:
-        `<div><h1>Привет, ${name}! Это твой номер - ${phoneNumber}?</h1><span style="color: red">${message}</span></div>` ||
+        `<div><h1>Привет, ${name}! Это твой номер - ${phoneNumber}?</h1><span style="color: red">${message} ---Env Var ${process.env.MAIL_USER}</span></div>` ||
         '[No message]',
     },
     function (err, info) {
